@@ -79,7 +79,7 @@ public interface ExpedienteService {
 
 - Implementa la lógica real definida en la interfaz `Service`.
 - Usa el repositorio (`Repository`) para acceder a la base de datos.
-- Convierte entre `Entity` y `VO`.
+- Convierte entre `Entity` y `VO' utilizando el converter
 
 **Ejemplo:**
 
@@ -95,14 +95,6 @@ public class ExpedienteServiceImpl implements ExpedienteService {
         return expedienteRepository.findAll().stream()
             .map(this::toVO)
             .collect(Collectors.toList());
-    }
-
-    private ExpedienteVO toVO(ExpedienteEntity entity) {
-        // Conversión manual
-    }
-
-    private ExpedienteEntity toEntity(ExpedienteVO vo) {
-        // Conversión manual
     }
 }
 ```
