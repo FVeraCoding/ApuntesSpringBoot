@@ -72,6 +72,40 @@ public interface ExpedienteService {
 }
 ```
 
+---
+
+
+## ServiceImpl (Implementación del Service)
+
+- Implementa la lógica real definida en la interfaz `Service`.
+- Usa el repositorio (`Repository`) para acceder a la base de datos.
+- Convierte entre `Entity` y `VO`.
+
+**Ejemplo:**
+
+```java
+@Service
+public class ExpedienteServiceImpl implements ExpedienteService {
+
+    @Autowired
+    private ExpedienteRepository expedienteRepository;
+
+    @Override
+    public List<ExpedienteVO> findAll() {
+        return expedienteRepository.findAll().stream()
+            .map(this::toVO)
+            .collect(Collectors.toList());
+    }
+
+    private ExpedienteVO toVO(ExpedienteEntity entity) {
+        // Conversión manual
+    }
+
+    private ExpedienteEntity toEntity(ExpedienteVO vo) {
+        // Conversión manual
+    }
+}
+```
 
 ---
 
@@ -117,41 +151,6 @@ public class ExpedienteConverter {
     }
 }
 ```
-
-
-## ServiceImpl (Implementación del Service)
-
-- Implementa la lógica real definida en la interfaz `Service`.
-- Usa el repositorio (`Repository`) para acceder a la base de datos.
-- Convierte entre `Entity` y `VO`.
-
-**Ejemplo:**
-
-```java
-@Service
-public class ExpedienteServiceImpl implements ExpedienteService {
-
-    @Autowired
-    private ExpedienteRepository expedienteRepository;
-
-    @Override
-    public List<ExpedienteVO> findAll() {
-        return expedienteRepository.findAll().stream()
-            .map(this::toVO)
-            .collect(Collectors.toList());
-    }
-
-    private ExpedienteVO toVO(ExpedienteEntity entity) {
-        // Conversión manual
-    }
-
-    private ExpedienteEntity toEntity(ExpedienteVO vo) {
-        // Conversión manual
-    }
-}
-```
-
----
 
 
 ---
@@ -200,8 +199,8 @@ public class ExpedienteController {
 
 | Capa         | Función principal                     | Ejemplo                            |
 |--------------|----------------------------------------|------------------------------------|
-| Repository   | Acceso a datos                        | `findByAnio(int anio)`             |
-| Service      | Lógica de negocio y transformación    | `getExpedientesDelAnio()`          |
+| Repository   | Acceso a datos                         | `findByAnio(int anio)`             |
+| Service      | Lógica de negocio                      | `getExpedientesDelAnio()`          |
 
 ---
 
