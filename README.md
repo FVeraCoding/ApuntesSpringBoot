@@ -1,4 +1,4 @@
-# 🧾 Apuntes Spring Boot – Arquitectura en Capas (Ejemplo: Expedientes)
+# 🧾 Apuntes Spring Boot – Arquitectura en Capas
 
 Este repositorio documenta la arquitectura en capas utilizada en un proyecto con Spring Boot, enfocada en el manejo de entidades como **Expedientes** con el uso de VO (Value Objects), Repositorios, Servicios e Implementaciones.
 
