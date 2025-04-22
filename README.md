@@ -208,3 +208,35 @@ public class ExpedienteController {
 ---
 
 > Esta estructura sigue buenas prácticas y facilita el desarrollo de aplicaciones robustas en Spring Boot.
+
+---
+
+## Flujo de datos entre frontend (Angular) y backend (Spring Boot)
+
+El flujo de datos entre el cliente y el servidor en esta aplicación web de biblioteca se basa en un modelo de comunicación **cliente-servidor** utilizando **peticiones HTTP** sobre el protocolo REST. Angular, desde el navegador del usuario, actúa como cliente que interactúa con el servidor desarrollado en Spring Boot a través de servicios específicos.
+
+Este flujo se puede resumir en los siguientes pasos:
+
+1. **Acción del usuario en el frontend:**
+   El usuario interactúa con la interfaz (por ejemplo, al registrarse, buscar un libro o inscribirse a un evento). Esta acción desencadena una llamada a un método en un componente Angular, que a su vez utiliza un servicio para comunicarse con el backend.
+
+2. **Llamada HTTP desde Angular:**
+   Angular realiza una petición HTTP (`GET`, `POST`, `PUT` o `DELETE`) a un endpoint definido en el backend. La información se envía habitualmente en formato JSON, ya sea como parámetros en la URL o como cuerpo de la petición.
+
+3. **Intervención del interceptor:**
+   Antes de que la petición llegue al servidor, el **interceptor HTTP** añade el token JWT (si el usuario está autenticado) en la cabecera de la petición. Esto permite que el backend identifique al usuario y verifique sus permisos.
+
+4. **Recepción y procesamiento en el backend (Spring Boot):**
+   El servidor recibe la petición y la redirige al controlador (`Controller`) correspondiente. Este llama al servicio (`Service`) que contiene la lógica de negocio, y este, a su vez, interactúa con los repositorios para consultar o modificar la base de datos.
+
+5. **Transformación de datos (Entity → VO):**
+   Antes de enviar la respuesta al cliente, los datos recuperados de la base de datos (entidades) se transforman en objetos VO (Value Object), que contienen solo la información necesaria para el frontend, evitando exponer detalles internos del modelo.
+
+6. **Respuesta al frontend:**
+   El backend devuelve una respuesta HTTP con un objeto JSON, que puede ser una lista de libros, el resultado de una inscripción, los datos del usuario, etc. En caso de error (por ejemplo, si el token no es válido), se devuelve un código 401 o 403 con un mensaje explicativo.
+
+7. **Actualización del frontend:**
+   Angular recibe los datos y actualiza dinámicamente la interfaz de usuario. Gracias al sistema reactivo de Angular, estos cambios se reflejan inmediatamente sin necesidad de recargar la página.
+
+Este modelo de flujo de datos garantiza una **comunicación eficiente, segura y estructurada** entre ambas partes. Además, permite escalar la aplicación fácilmente y mantener separadas las responsabilidades de presentación (Angular) y lógica de negocio/datos (Spring Boot).
+
