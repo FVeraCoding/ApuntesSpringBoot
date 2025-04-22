@@ -6,14 +6,24 @@ Este repositorio documenta la arquitectura en capas utilizada en un proyecto con
 
 - [Entity](#entity)
 - [Value Object (VO)](#value-object-vo)
-- [Repository](#repository)
 - [Converter](#converter)
+- [Repository](#repository)
 - [Service (Interfaz)](#service-interfaz)
 - [ServiceImpl (Implementación del Service)](#serviceimpl-implementación-del-service)
 - [Controller](#controller)
 - [Diferencias entre Repository y Service](#diferencias-entre-repository-y-service)
 - [Ventajas de esta arquitectura](#ventajas-de-esta-arquitectura)
 - [Flujo de datos entre frontend (Angular) y backend (Spring Boot)](#🧩-flujo-de-datos-entre-frontend-angular-y-backend-spring-boot)
+
+
+---
+
+## Entity
+
+- Representa una tabla de la base de datos.
+- Se anota con `@Entity` y se mapea con `@Table`.
+- Utiliza anotaciones como `@Id`, `@GeneratedValue`, `@Column`, `@ManyToOne`, etc.
+- No debe usarse directamente en el frontend.
 
 
 ---
@@ -28,17 +38,50 @@ Este repositorio documenta la arquitectura en capas utilizada en un proyecto con
 
 ---
 
+## Converter
 
-## Entity
+- Se encarga de transformar datos entre `Entity` y `VO`.
+- Se recomienda crear un paquete `converter` para mantener limpio el código.
+- Evita duplicar lógica de conversión en múltiples clases.
+- Facilita pruebas unitarias y mantenimiento.
 
-- Representa una tabla de la base de datos.
-- Se anota con `@Entity` y se mapea con `@Table`.
-- Utiliza anotaciones como `@Id`, `@GeneratedValue`, `@Column`, `@ManyToOne`, etc.
-- No debe usarse directamente en el frontend.
+**Ejemplo:**
 
+```java
+@Component
+public class ExpedienteConverter {
+
+    public ExpedienteVO toVO(ExpedienteEntity entity) {
+        if (entity == null) return null;
+        ExpedienteVO vo = new ExpedienteVO();
+        vo.setId(entity.getId());
+        vo.setIdTipoExpediente(entity.getIdTipoExpediente());
+        vo.setAnio(entity.getAnio());
+        vo.setCodigo(entity.getCodigo());
+        vo.setFechaAlta(entity.getFechaAlta());
+        vo.setNEstado(entity.getNEstado());
+        vo.setIdUsuarioResponsable(entity.getIdUsuarioResponsable());
+        vo.setAsunto(entity.getAsunto());
+        return vo;
+    }
+
+    public ExpedienteEntity toEntity(ExpedienteVO vo) {
+        if (vo == null) return null;
+        ExpedienteEntity entity = new ExpedienteEntity();
+        entity.setId(vo.getId());
+        entity.setIdTipoExpediente(vo.getIdTipoExpediente());
+        entity.setAnio(vo.getAnio());
+        entity.setCodigo(vo.getCodigo());
+        entity.setFechaAlta(vo.getFechaAlta());
+        entity.setNEstado(vo.getNEstado());
+        entity.setIdUsuarioResponsable(vo.getIdUsuarioResponsable());
+        entity.setAsunto(vo.getAsunto());
+        return entity;
+    }
+}
+```
 
 ---
-
 
 ## Repository
 
@@ -103,51 +146,6 @@ public class ExpedienteServiceImpl implements ExpedienteService {
 
 ---
 
-## Converter
-
-- Se encarga de transformar datos entre `Entity` y `VO`.
-- Se recomienda crear un paquete `converter` para mantener limpio el código.
-- Evita duplicar lógica de conversión en múltiples clases.
-- Facilita pruebas unitarias y mantenimiento.
-
-**Ejemplo:**
-
-```java
-@Component
-public class ExpedienteConverter {
-
-    public ExpedienteVO toVO(ExpedienteEntity entity) {
-        if (entity == null) return null;
-        ExpedienteVO vo = new ExpedienteVO();
-        vo.setId(entity.getId());
-        vo.setIdTipoExpediente(entity.getIdTipoExpediente());
-        vo.setAnio(entity.getAnio());
-        vo.setCodigo(entity.getCodigo());
-        vo.setFechaAlta(entity.getFechaAlta());
-        vo.setNEstado(entity.getNEstado());
-        vo.setIdUsuarioResponsable(entity.getIdUsuarioResponsable());
-        vo.setAsunto(entity.getAsunto());
-        return vo;
-    }
-
-    public ExpedienteEntity toEntity(ExpedienteVO vo) {
-        if (vo == null) return null;
-        ExpedienteEntity entity = new ExpedienteEntity();
-        entity.setId(vo.getId());
-        entity.setIdTipoExpediente(vo.getIdTipoExpediente());
-        entity.setAnio(vo.getAnio());
-        entity.setCodigo(vo.getCodigo());
-        entity.setFechaAlta(vo.getFechaAlta());
-        entity.setNEstado(vo.getNEstado());
-        entity.setIdUsuarioResponsable(vo.getIdUsuarioResponsable());
-        entity.setAsunto(vo.getAsunto());
-        return entity;
-    }
-}
-```
-
-
----
 
 ## Controller
 
