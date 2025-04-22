@@ -13,6 +13,8 @@ Este repositorio documenta la arquitectura en capas utilizada en un proyecto con
 - [Controller](#controller)
 - [Diferencias entre Repository y Service](#diferencias-entre-repository-y-service)
 - [Ventajas de esta arquitectura](#ventajas-de-esta-arquitectura)
+- [Flujo de datos entre frontend (Angular) y backend (Spring Boot)](#🧩-flujo-de-datos-entre-frontend-angular-y-backend-spring-boot)
+
 
 ---
 
