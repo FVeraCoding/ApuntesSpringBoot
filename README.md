@@ -102,9 +102,9 @@ public interface ExpedienteRepository extends JpaRepository<ExpedienteEntity, Lo
 
 ## Service (Interfaz)
 
-    - Define el **contrato** de lo que se puede hacer con el recurso.
-    - Separa la lógica del negocio de la presentación.
-    - Mejora el mantenimiento y testeo del código.
+- Define el **contrato** de lo que se puede hacer con el recurso.
+- Separa la lógica del negocio de la presentación.
+- Mejora el mantenimiento y testeo del código.
 
 **Ejemplo:**
 
@@ -213,12 +213,12 @@ public class ExpedienteController {
 
 ## Flujo de datos entre frontend (Angular) y backend (Spring Boot)
 
-El flujo de datos entre el cliente y el servidor en esta aplicación web de biblioteca se basa en un modelo de comunicación **cliente-servidor** utilizando **peticiones HTTP** sobre el protocolo REST. Angular, desde el navegador del usuario, actúa como cliente que interactúa con el servidor desarrollado en Spring Boot a través de servicios específicos.
+El flujo de datos entre el cliente y el servidor se basa en un modelo de comunicación **cliente-servidor** utilizando **peticiones HTTP** sobre el protocolo REST. Angular, desde el navegador del usuario, actúa como cliente que interactúa con el servidor desarrollado en Spring Boot a través de servicios específicos.
 
 Este flujo se puede resumir en los siguientes pasos:
 
 1. **Acción del usuario en el frontend:**
-   El usuario interactúa con la interfaz (por ejemplo, al registrarse, buscar un libro o inscribirse a un evento). Esta acción desencadena una llamada a un método en un componente Angular, que a su vez utiliza un servicio para comunicarse con el backend.
+   El usuario interactúa con la interfaz (por ejemplo, al registrarse). Esta acción desencadena una llamada a un método en un componente Angular, que a su vez utiliza un servicio para comunicarse con el backend.
 
 2. **Llamada HTTP desde Angular:**
    Angular realiza una petición HTTP (`GET`, `POST`, `PUT` o `DELETE`) a un endpoint definido en el backend. La información se envía habitualmente en formato JSON, ya sea como parámetros en la URL o como cuerpo de la petición.
